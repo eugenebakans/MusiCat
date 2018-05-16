@@ -1,5 +1,6 @@
 package com.bakans.musicat.util;
 
+import com.bakans.musicat.entity.Song;
 import org.apache.commons.io.FilenameUtils;
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
@@ -12,20 +13,28 @@ import java.util.List;
 public class FolderParser {
 
 
-    public static List<MP3File> parse(String path) {
-        List<MP3File> list = new ArrayList<MP3File>();
+    public static List<Song> parse(String path) {
+        List<Song> list = new ArrayList<Song>();
         prepareList(list, path);
         return list;
     }
 
-    private static void prepareList(List<MP3File> list, String path) {
+    private static void prepareList(List<Song> list, String path) {
         File directory = new File(path);
         // get all the files from a directory
         File[] fList = directory.listFiles();
         for (File file : fList) {
             if ((file.isFile()) && (FilenameUtils.getExtension(file.getName()).equals("mp3"))) {
                 try {
-                    list.add(new MP3File(file));
+                    Song song = new Song();
+                    MP3File mp3File = new MP3File(file);
+
+                    song.setPath(file.getAbsolutePath());
+                    song.setArtist(Helper.getMP3Artist(mp3File));
+                    song.setAlbum(Helper.getMP3Album(mp3File));
+                    song.setTitle(Helper.getMP3Title(mp3File));
+                    song.setLength(Helper.getMP3Len(mp3File));
+                    list.add(song);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (TagException e) {

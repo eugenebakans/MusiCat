@@ -1,10 +1,10 @@
 package com.bakans.musicat.util;
 
-import org.farng.mp3.MP3File;
+import com.bakans.musicat.entity.Song;
 
 import java.util.List;
 
 public interface IPrinter {
     public void print(String str);
-    public void print(List<MP3File> list);
+    public void print(List<Song> list);
 }
