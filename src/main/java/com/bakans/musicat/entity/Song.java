@@ -46,4 +46,34 @@ public class Song {
         builder.append("Song: ").append(trackTitle).append(", ").append(length).append(", path: ").append(path);
         return builder.toString();
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + trackTitle.hashCode();
+        result = prime * result + length.hashCode();
+        result = prime * result + path.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Song other = (Song) obj;
+        if (trackTitle != other.trackTitle)
+            return false;
+        if (trackTitle != other.trackTitle)
+            return false;
+        if (length != other.length)
+            return false;
+        if (path != other.path)
+            return false;
+        return true;
+    }
 }

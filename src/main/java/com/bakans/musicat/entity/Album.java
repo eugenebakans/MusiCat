@@ -1,23 +1,23 @@
 package com.bakans.musicat.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Album {
     private String albumTitle;
-    private List<Song> trackList;
+    private Set<Song> trackList;
 
     public Album() {
         this.albumTitle = null;
-        this.trackList = new ArrayList<Song>();
+        this.trackList = new HashSet<Song>();
     }
 
     public Album(String albumTitle) {
         this.albumTitle = albumTitle;
-        this.trackList = new ArrayList<Song>();
+        this.trackList = new HashSet<Song>();
     }
 
-    public Album(String albumTitle, List<Song> trackList) {
+    public Album(String albumTitle, Set<Song> trackList) {
         this.albumTitle = albumTitle;
         this.trackList = trackList;
     }
@@ -30,11 +30,11 @@ public class Album {
         this.albumTitle = albumTitle;
     }
 
-    public List<Song> getTrackList() {
+    public Set<Song> getTrackList() {
         return trackList;
     }
 
-    public void setTrackList(List<Song> trackList) {
+    public void setTrackList(Set<Song> trackList) {
         this.trackList = trackList;
     }
 
@@ -66,5 +66,30 @@ public class Album {
             builder.append(song.toString()).append("\r\n");
         }
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Album other = (Album) obj;
+        if (albumTitle != other.albumTitle)
+            return false;
+       /* if (trackList != other.trackList)
+            return false;*/
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + albumTitle.hashCode();
+    //    result = prime * result + trackList.hashCode();
+        return result;
     }
 }
