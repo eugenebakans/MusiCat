@@ -1,20 +1,19 @@
 package com.bakans.musicat.main;
 
-import com.bakans.musicat.entity.Song;
+import com.bakans.musicat.entity.Artist;
 import com.bakans.musicat.util.ConsolePrinter;
 import com.bakans.musicat.util.FolderParser;
+import com.bakans.musicat.util.HtmlPrinter;
 import com.bakans.musicat.util.IPrinter;
-import com.bakans.musicat.util.Input;
-import org.farng.mp3.MP3File;
 
-import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String [] args) {
-        IPrinter printer = new ConsolePrinter();
+        IPrinter printer = new HtmlPrinter();
         for(String arg:args) {
-            List<Song> fileList = FolderParser.parse(arg);
-            printer.print(fileList);
+            Set<Artist> list = FolderParser.parse(arg);
+            printer.print(list);
         }
     }
 }

@@ -38,9 +38,11 @@ public class Album {
         this.trackList = trackList;
     }
 
-    public boolean hasTrack(String title) {
+    public boolean hasTrack(Song obj) {
         for(Song track:trackList) {
-            if(track.getTrackTitle().equals(title)) {
+            if((track.getTrackTitle().equals(obj.getTrackTitle()))
+                    && (track.getPath().equals(obj.getPath()))
+                    && (track.getLength().equals(obj.getLength()))) {
                 return true;
             }
         }
@@ -61,7 +63,7 @@ public class Album {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append( "Album: " + albumTitle + "\r\n" );
+        builder.append("\t\t").append( "Album: " + albumTitle + "\r\n" );
         for(Song song:trackList) {
             builder.append(song.toString()).append("\r\n");
         }

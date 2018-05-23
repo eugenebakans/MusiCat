@@ -43,7 +43,7 @@ public class Song {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Song: ").append(trackTitle).append(", ").append(length).append(", path: ").append(path);
+        builder.append("\t\t\t\t").append("Song: ").append(trackTitle).append(", ").append(length).append(", path: ").append(path);
         return builder.toString();
     }
 

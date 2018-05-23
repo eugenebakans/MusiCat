@@ -3,96 +3,88 @@ package com.bakans.musicat.util;
 import com.bakans.musicat.entity.Album;
 import com.bakans.musicat.entity.Artist;
 import com.bakans.musicat.entity.Song;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import org.apache.commons.io.FilenameUtils;
-import org.farng.mp3.MP3File;
-import org.farng.mp3.TagException;
+
+import com.mpatric.mp3agic.Mp3File;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FolderParser {
 
-    public static List<Artist> parse(String path) {
-        List<Artist> list = new ArrayList<Artist>();
+    public static Set<Artist> parse(String path) {
+        Set<Artist> list = new HashSet<Artist>();
         prepareList(list, path);
         return list;
     }
 
-    private static void prepareList(List<Artist> list, String path) {
+    private static void prepareList(Set<Artist> list, String path) {
         File directory = new File(path);
-        // get all the files from a directory
         File[] fList = directory.listFiles();
         for (File file : fList) {
             if ((file.isFile()) && (FilenameUtils.getExtension(file.getName()).equals("mp3"))) {
+                Mp3File mp3File = null;
                 try {
-                    MP3File mp3File = new MP3File(file);
-                    addSongToList(list, mp3File);
+                    mp3File = new Mp3File(file);
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch (TagException e) {
+                } catch (UnsupportedTagException e) {
+                    e.printStackTrace();
+                } catch (InvalidDataException e) {
                     e.printStackTrace();
                 }
+                String absPath = file.getAbsolutePath();
+                String artist = MP3FileParser.getMP3Artist(mp3File);
+                String album = MP3FileParser.getMP3Album(mp3File);
+                String title = MP3FileParser.getMP3Title(mp3File);
+                String length = MP3FileParser.getMP3Len(mp3File);
+
+                Song song = new Song(title, length,absPath);
+                addToList(list, artist, album, song);
+
+
             } else if (file.isDirectory()) {
                 prepareList(list, file.getAbsolutePath());
             }
         }
     }
+    private static void addToList (Set<Artist> list, String artist, String album, Song song) {
+        Artist newArt = new Artist(artist);
+        Album newAlb = new Album(album);
+        if(list.isEmpty()) {
 
-    private static boolean addSongToList(List<Artist> list, MP3File mp3File) {
-        String absPath = mp3File.getMp3file().getAbsolutePath();
-        String artist = MP3FileParser.getMP3Artist(mp3File);
-        String album = MP3FileParser.getMP3Album(mp3File);
-        String title = MP3FileParser.getMP3Title(mp3File);
-        String length = MP3FileParser.getMP3Len(mp3File);
-
-        Song song = new Song(title, length,absPath);
-
+            newAlb.addTrack(song);
+            newArt.addAlbum(newAlb);
+            list.add(newArt);
+            return;
+        }
+        boolean hasArtist = false;
         for(Artist art:list) {
-            if(art.getName().equals(artist)) {
-                art.addAlbum(new Album(album));
-                art.getAlbum(album).addTrack(song);
-            } else {
-                Artist newArt = new Artist(artist);
-                Album newAlb = new Album(album);
-                newAlb.addTrack(song);
-                newArt.addAlbum(newAlb);
-                list.add(newArt);
-                return true;
+            if (art.getName().equals(artist)) {
+                if(art.hasAlbum(album)) {
+                    if(!art.getAlbum(album).hasTrack(song)){
+                        art.getAlbum(album).addTrack(song);
+                        return;
+                    }
+
+                } else {
+                    newAlb.addTrack(song);
+                    art.addAlbum(newAlb);
+                    return;
+                }
+                hasArtist = true;
             }
         }
-        /*for(Artist art:list) {
-            if(art.getName().equals(artist)) {
-                for(Album a:art.getAlbums()) {
-                    if(a.getAlbumTitle().equals(album)) {
-                        for(Song s:a.getTrackList()) {
-                            if(s.getTrackTitle().equals(title)) {
-                                return false;
-                            } else {
-                                a.addTrack(song);
-                                return true;
-                            }
-                        }
-                    } else {
-                        Album newAlb = new Album(album);
-                        newAlb.addTrack(song);
-                        art.addAlbum(newAlb);
-                        return true;
-                    }
-                }
-
-            } else {
-                Artist newArt = new Artist(artist);
-                Album newAlb = new Album(album);
-                newAlb.addTrack(song);
-                newArt.addAlbum(newAlb);
-                list.add(newArt);
-                return true;
-
-            }
-        }*/
-
-        return false;
+        if(!hasArtist) {
+            newAlb.addTrack(song);
+            newArt.addAlbum(newAlb);
+            list.add(newArt);
+            return;
+        }
     }
+
 }
