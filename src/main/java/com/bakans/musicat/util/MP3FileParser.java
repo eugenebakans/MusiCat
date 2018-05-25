@@ -9,13 +9,20 @@ public class MP3FileParser {
 
     public static String getMP3Title(Mp3File song) {
         String title = null;
+        Pattern p = Pattern.compile("([\\S]).*");
         if(song.hasId3v2Tag()) {
             title = song.getId3v2Tag().getTitle();
-            if((title != null) & (title != "")) return title;
+            if(title != null) {
+                Matcher m = p.matcher(title);
+                if (m.matches()) return title;
+            }
         }
         if(song.hasId3v1Tag()) {
             title = song.getId3v1Tag().getTitle();
-            if((title != null) & (title != "")) return title;
+            if(title != null) {
+                Matcher m = p.matcher(title);
+                if (m.matches()) return title;
+            }
         }
         return "Unknown title";
     }
