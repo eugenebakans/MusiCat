@@ -4,13 +4,13 @@ import org.farng.mp3.MP3File;
 
 public class Song {
     private String trackTitle;
-    private String length;
+    private int length;
     private String path;
 
     public Song() {
 
     }
-    public Song(String trackTitle, String length, String path) {
+    public Song(String trackTitle, int length, String path) {
         this.trackTitle = trackTitle;
         this.length = length;
         this.path = path;
@@ -24,11 +24,15 @@ public class Song {
         this.trackTitle = trackTitle;
     }
 
-    public String getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(String length) {
+    public String getLengthInMins() {
+        return String.format("%02d:%02d", length/60, length%60);
+    }
+
+    public void setLength(int length) {
         this.length = length;
     }
 
@@ -43,7 +47,9 @@ public class Song {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\t\t\t\t").append("Song: ").append(trackTitle).append(", ").append(length).append(", path: ").append(path);
+        builder.append("\t\t\t\t").append("Song: ").append(trackTitle).append(", ")
+                .append(length/60).append(":").append(length%60)
+                .append(", path: ").append(path);
         return builder.toString();
     }
 
@@ -52,7 +58,7 @@ public class Song {
         final int prime = 31;
         int result = 1;
         result = prime * result + trackTitle.hashCode();
-        result = prime * result + length.hashCode();
+        result = prime * result + length;
         result = prime * result + path.hashCode();
         return result;
     }

@@ -42,7 +42,7 @@ public class Album {
         for(Song track:trackList) {
             if((track.getTrackTitle().equals(obj.getTrackTitle()))
                     && (track.getPath().equals(obj.getPath()))
-                    && (track.getLength().equals(obj.getLength()))) {
+                    && (track.getLength() == obj.getLength())) {
                 return true;
             }
         }

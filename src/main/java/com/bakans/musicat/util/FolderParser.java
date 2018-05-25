@@ -41,7 +41,7 @@ public class FolderParser {
                 String artist = MP3FileParser.getMP3Artist(mp3File);
                 String album = MP3FileParser.getMP3Album(mp3File);
                 String title = MP3FileParser.getMP3Title(mp3File);
-                String length = MP3FileParser.getMP3Len(mp3File);
+                int length = MP3FileParser.getMP3Len(mp3File);
 
                 Song song = new Song(title, length,absPath);
                 addToList(list, artist, album, song);
