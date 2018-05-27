@@ -17,10 +17,10 @@ public class HtmlPrinter implements IPrinter {
     }
 
     public void print(Set<Artist> list) {
-        File f = new File("result.html");
+        File f = new File("result.html");//constant
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-            String source =
+            String source = //in separate method!
                     html(
                             head(
                                     title("MusiCat v1.00")
@@ -49,7 +49,7 @@ public class HtmlPrinter implements IPrinter {
                             )
                     ).renderFormatted();
             bw.write(source);
-            bw.close();
+            bw.close();//maybe you can use any utility method from apache lib for writiing to file in one line...
             Desktop.getDesktop().browse(f.toURI());
         } catch (IOException e) {
             e.printStackTrace();

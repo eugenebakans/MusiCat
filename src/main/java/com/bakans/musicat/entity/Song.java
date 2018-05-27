@@ -1,7 +1,5 @@
 package com.bakans.musicat.entity;
 
-import org.farng.mp3.MP3File;
-
 public class Song {
     private String trackTitle;
     private int length;
@@ -10,6 +8,7 @@ public class Song {
     public Song() {
 
     }
+
     public Song(String trackTitle, int length, String path) {
         this.trackTitle = trackTitle;
         this.length = length;
@@ -29,7 +28,7 @@ public class Song {
     }
 
     public String getLengthInMins() {
-        return String.format("%02d:%02d", length/60, length%60);
+        return String.format("%02d:%02d", length / 60, length % 60);
     }
 
     public void setLength(int length) {
@@ -46,11 +45,7 @@ public class Song {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("\t\t\t\t").append("Song: ").append(trackTitle).append(", ")
-                .append(length/60).append(":").append(length%60)
-                .append(", path: ").append(path);
-        return builder.toString();
+        return "\t\t\t\t" + "Song: " + trackTitle + ", " + length / 60 + ":" + length % 60 + ", path: " + path;
     }
 
     @Override
@@ -72,14 +67,12 @@ public class Song {
         if (getClass() != obj.getClass())
             return false;
         Song other = (Song) obj;
-        if (trackTitle != other.trackTitle)
+        if (!trackTitle.equals(other.trackTitle))
             return false;
-        if (trackTitle != other.trackTitle)
+        if (!trackTitle.equals(other.trackTitle))
             return false;
         if (length != other.length)
             return false;
-        if (path != other.path)
-            return false;
-        return true;
+        return path.equals(other.path);
     }
 }

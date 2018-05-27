@@ -8,14 +8,14 @@ import java.util.regex.Pattern;
 public class MP3FileParser {
 
     public static String getMP3Title(Mp3File song) {
-        String title = null;
-        Pattern p = Pattern.compile("([\\S]).*");
+        String title;
+        Pattern p = Pattern.compile("([\\S]).*");//add pattern constant
         if(song.hasId3v2Tag()) {
             title = song.getId3v2Tag().getTitle();
             if(title != null) {
                 Matcher m = p.matcher(title);
                 if (m.matches()) return title;
-            }
+            }//repeated code segments
         }
         if(song.hasId3v1Tag()) {
             title = song.getId3v1Tag().getTitle();
@@ -24,7 +24,7 @@ public class MP3FileParser {
                 if (m.matches()) return title;
             }
         }
-        return "Unknown title";
+        return "Unknown title";//add constanr
     }
 
     public static String getMP3Artist(Mp3File song) {

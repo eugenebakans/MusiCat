@@ -13,7 +13,6 @@ public class ConsolePrinter implements IPrinter {
             try {
                 System.out.println(artist.toString());
             } catch(Exception e) {
-                continue;
             }
         }
     }

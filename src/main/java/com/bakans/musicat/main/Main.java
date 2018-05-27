@@ -10,11 +10,12 @@ import java.util.Set;
 
 public class Main {
     public static void main(String [] args) {
-        IPrinter printer = new HtmlPrinter();
         Set<Artist> set = new HashSet<Artist>();
         for(String arg:args) {
             set.addAll(FolderParser.parse(arg));
         }
+
+        IPrinter printer = new HtmlPrinter();
         printer.print(set);
     }
 }

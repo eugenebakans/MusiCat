@@ -9,11 +9,11 @@ public class Artist {
 
     public Artist() {
         this.name = null;
-        this.albums = new HashSet<Album>();
+        this.albums = new HashSet<>();
     }
     public Artist(String name) {
         this.name = name;
-        this.albums = new HashSet<Album>();
+        this.albums = new HashSet<>();
     }
 
     public Artist(String name, Set<Album> albums) {
