@@ -39,8 +39,8 @@ public class Album {
     }
 
     public boolean hasTrack(Song obj) {
-        for(Song track:trackList) {
-            if((track.getTrackTitle().equals(obj.getTrackTitle()))
+        for (Song track : trackList) {
+            if ((track.getTrackTitle().equals(obj.getTrackTitle()))
                     && (track.getPath().equals(obj.getPath()))
                     && (track.getLength() == obj.getLength())) {
                 return true; //replace with equals and verify it
@@ -48,14 +48,16 @@ public class Album {
         }
         return false;
     }
+
     public Song getTrack(String title) {//use java8 streams api
-        for(Song track:trackList) {
-            if(track.getTrackTitle().equals(title)) {
+        for (Song track : trackList) {
+            if (track.getTrackTitle().equals(title)) {
                 return track;
             }
         }
         return null;
     }
+
     public void addTrack(Song album) {
         this.trackList.add(album);
     }
@@ -64,7 +66,7 @@ public class Album {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("\t\t").append("Album: ").append(albumTitle).append("\r\n");
-        for(Song song:trackList) {
+        for (Song song : trackList) {
             builder.append(song.toString()).append("\r\n");//find and use system new line constant
         }
         return builder.toString();
@@ -87,7 +89,7 @@ public class Album {
         final int prime = 31;
         int result = 1;
         result = prime * result + albumTitle.hashCode();
-    //    result = prime * result + trackList.hashCode();
+        //    result = prime * result + trackList.hashCode();
         return result;
     }
 }

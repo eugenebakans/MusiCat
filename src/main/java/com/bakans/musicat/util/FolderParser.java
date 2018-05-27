@@ -4,10 +4,9 @@ import com.bakans.musicat.entity.Album;
 import com.bakans.musicat.entity.Artist;
 import com.bakans.musicat.entity.Song;
 import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import org.apache.commons.io.FilenameUtils;
-
-import com.mpatric.mp3agic.Mp3File;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class FolderParser {
     private static void prepareList(Set<Artist> list, String path) {
         File directory = new File(path);
         File[] fList = directory.listFiles();
-        if( fList == null) return;
+        if (fList == null) return;
         for (File file : fList) {
             if ((file.isFile()) && (FilenameUtils.getExtension(file.getName()).equals("mp3"))) {
                 Mp3File mp3File;
@@ -41,7 +40,7 @@ public class FolderParser {
                 String title = MP3FileParser.getMP3Title(mp3File);
                 int length = MP3FileParser.getMP3Len(mp3File);
 
-                Song song = new Song(title, length,absPath);
+                Song song = new Song(title, length, absPath);
                 addToList(list, artist, album, song);
 
             } else if (file.isDirectory()) {
@@ -50,10 +49,10 @@ public class FolderParser {
         }
     }
 
-    private static void addToList (Set<Artist> list, String artist, String album, Song song) {//can you simplify it...
+    private static void addToList(Set<Artist> list, String artist, String album, Song song) {//can you simplify it...
         Artist newArt = new Artist(artist);
         Album newAlb = new Album(album);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
 
             newAlb.addTrack(song);
             newArt.addAlbum(newAlb);
@@ -61,10 +60,10 @@ public class FolderParser {
             return;
         }
         boolean hasArtist = false;
-        for(Artist art:list) {
+        for (Artist art : list) {
             if (art.getName().equals(artist)) {
-                if(art.hasAlbum(album)) {
-                    if(!art.getAlbum(album).hasTrack(song)){
+                if (art.hasAlbum(album)) {
+                    if (!art.getAlbum(album).hasTrack(song)) {
                         art.getAlbum(album).addTrack(song);
                         return;
                     }
@@ -77,7 +76,7 @@ public class FolderParser {
                 hasArtist = true;
             }
         }
-        if(!hasArtist) {
+        if (!hasArtist) {
             newAlb.addTrack(song);
             newArt.addAlbum(newAlb);
             list.add(newArt);

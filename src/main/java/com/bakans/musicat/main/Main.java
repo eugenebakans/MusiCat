@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         Set<Artist> set = new HashSet<Artist>();
-        for(String arg:args) {
+        for (String arg : args) {
             set.addAll(FolderParser.parse(arg));
         }
 

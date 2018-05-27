@@ -11,6 +11,7 @@ public class Artist {
         this.name = null;
         this.albums = new HashSet<>();
     }
+
     public Artist(String name) {
         this.name = name;
         this.albums = new HashSet<>();
@@ -38,30 +39,32 @@ public class Artist {
     }
 
     public boolean hasAlbum(String title) {
-        for(Album alb:albums) {
-            if(alb.getAlbumTitle().equals(title)) {
+        for (Album alb : albums) {
+            if (alb.getAlbumTitle().equals(title)) {
                 return true;
             }
         }
         return false;
     }
+
     public Album getAlbum(String title) {
-        for(Album alb:albums) {
-            if(alb.getAlbumTitle().equals(title)) {
+        for (Album alb : albums) {
+            if (alb.getAlbumTitle().equals(title)) {
                 return alb;
             }
         }
         return null;
     }
+
     public void addAlbum(Album album) {
-         this.albums.add(album);
+        this.albums.add(album);
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Artist: " + name + "\r\n");
-        for(Album alb:albums) {
+        for (Album alb : albums) {
             builder.append(alb.toString()).append("\r\n");
         }
         return builder.toString();
