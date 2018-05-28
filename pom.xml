@@ -17,11 +17,6 @@
             <version>1.2.2</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.javamusictag</groupId>
-            <artifactId>jid3lib</artifactId>
-            <version>0.5.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.mpatric</groupId>
             <artifactId>mp3agic</artifactId>
             <version>0.9.1</version>

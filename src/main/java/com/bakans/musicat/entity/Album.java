@@ -65,9 +65,9 @@ public class Album {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\t\t").append("Album: ").append(albumTitle).append("\r\n");
+        builder.append("\t\t").append("Album: ").append(albumTitle).append(System.lineSeparator());
         for (Song song : trackList) {
-            builder.append(song.toString()).append("\r\n");//find and use system new line constant
+            builder.append(song.toString()).append(System.lineSeparator());
         }
         return builder.toString();
     }

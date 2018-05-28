@@ -63,9 +63,9 @@ public class Artist {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Artist: " + name + "\r\n");
+        builder.append("Artist: ").append(name).append(System.lineSeparator());
         for (Album alb : albums) {
-            builder.append(alb.toString()).append("\r\n");
+            builder.append(alb.toString()).append(System.lineSeparator());
         }
         return builder.toString();
     }
