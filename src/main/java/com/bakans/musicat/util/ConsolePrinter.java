@@ -8,12 +8,12 @@ public class ConsolePrinter implements IPrinter {
     public void print(String str) {
         System.out.println(str);
     }
+
     public void print(Set<Artist> list) {
-        for (Artist artist:list){
+        for (Artist artist : list) {
             try {
                 System.out.println(artist.toString());
-            } catch(Exception e) {
-                continue;
+            } catch (Exception e) {
             }
         }
     }

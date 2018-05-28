@@ -1,6 +1,7 @@
 package com.bakans.musicat.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Album {
@@ -8,13 +9,12 @@ public class Album {
     private Set<Song> trackList;
 
     public Album() {
-        this.albumTitle = null;
-        this.trackList = new HashSet<Song>();
+        this.trackList = new HashSet<>();
     }
 
     public Album(String albumTitle) {
         this.albumTitle = albumTitle;
-        this.trackList = new HashSet<Song>();
+        this.trackList = new HashSet<>();
     }
 
     public Album(String albumTitle, Set<Song> trackList) {
@@ -39,23 +39,25 @@ public class Album {
     }
 
     public boolean hasTrack(Song obj) {
-        for(Song track:trackList) {
-            if((track.getTrackTitle().equals(obj.getTrackTitle()))
+        for (Song track : trackList) {
+            if ((track.getTrackTitle().equals(obj.getTrackTitle()))
                     && (track.getPath().equals(obj.getPath()))
                     && (track.getLength() == obj.getLength())) {
-                return true;
+                return true; //replace with equals and verify it
             }
         }
         return false;
     }
-    public Song getTrack(String title) {
-        for(Song track:trackList) {
-            if(track.getTrackTitle().equals(title)) {
+
+    public Song getTrack(String title) {//use java8 streams api
+        for (Song track : trackList) {
+            if (track.getTrackTitle().equals(title)) {
                 return track;
             }
         }
         return null;
     }
+
     public void addTrack(Song album) {
         this.trackList.add(album);
     }
@@ -63,9 +65,9 @@ public class Album {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\t\t").append( "Album: " + albumTitle + "\r\n" );
-        for(Song song:trackList) {
-            builder.append(song.toString()).append("\r\n");
+        builder.append("\t\t").append("Album: ").append(albumTitle).append("\r\n");
+        for (Song song : trackList) {
+            builder.append(song.toString()).append("\r\n");//find and use system new line constant
         }
         return builder.toString();
     }
@@ -79,11 +81,7 @@ public class Album {
         if (getClass() != obj.getClass())
             return false;
         Album other = (Album) obj;
-        if (albumTitle != other.albumTitle)
-            return false;
-       /* if (trackList != other.trackList)
-            return false;*/
-        return true;
+        return Objects.equals(albumTitle, other.albumTitle);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class Album {
         final int prime = 31;
         int result = 1;
         result = prime * result + albumTitle.hashCode();
-    //    result = prime * result + trackList.hashCode();
+        //    result = prime * result + trackList.hashCode();
         return result;
     }
 }
