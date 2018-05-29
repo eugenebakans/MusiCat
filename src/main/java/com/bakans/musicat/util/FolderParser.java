@@ -1,8 +1,6 @@
 package com.bakans.musicat.util;
 
-import com.bakans.musicat.entity.Album;
-import com.bakans.musicat.entity.Artist;
-import com.bakans.musicat.entity.Song;
+import com.bakans.musicat.entity.*;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
@@ -52,35 +50,23 @@ public class FolderParser {
     private static void addToList(Set<Artist> list, String artist, String album, Song song) {//can you simplify it...
         Artist newArt = new Artist(artist);
         Album newAlb = new Album(album);
-        if (list.isEmpty()) {
-
-            newAlb.addTrack(song);
-            newArt.addAlbum(newAlb);
-            list.add(newArt);
-            return;
-        }
-        boolean hasArtist = false;
-        for (Artist art : list) {
-            if (art.getName().equals(artist)) {
-                if (art.hasAlbum(album)) {
-                    if (!art.getAlbum(album).hasTrack(song)) {
+        if (!list.isEmpty()) {
+            for (Artist art : list) {
+                if (art.getName().equals(artist)) {
+                    if (art.hasAlbum(album)) {
                         art.getAlbum(album).addTrack(song);
                         return;
+                    } else {
+                        newAlb.addTrack(song);
+                        art.addAlbum(newAlb);
+                        return;
                     }
-
-                } else {
-                    newAlb.addTrack(song);
-                    art.addAlbum(newAlb);
-                    return;
                 }
-                hasArtist = true;
             }
         }
-        if (!hasArtist) {
-            newAlb.addTrack(song);
-            newArt.addAlbum(newAlb);
-            list.add(newArt);
-        }
+        newAlb.addTrack(song);
+        newArt.addAlbum(newAlb);
+        list.add(newArt);
     }
 
 }
