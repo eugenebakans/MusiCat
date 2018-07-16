@@ -52,7 +52,7 @@ public class FolderParser {
         Artist newArt = new Artist(artist);
         Album newAlb = new Album(album);
         if(list.stream().anyMatch(art -> artist.equals(art.getName()))) {
-            Artist tmp = list.stream().filter(art -> artist.equals(art.getName())).collect(Collectors.toList()).get(0);
+            Artist tmp = list.stream().filter(art -> artist.equals(art.getName())).findFirst().get();
             if( tmp.getAlbums().stream().anyMatch(alb -> album.equals(alb.getAlbumTitle()))) {
                 tmp.getAlbum(album).addTrack(song);
                 return;
