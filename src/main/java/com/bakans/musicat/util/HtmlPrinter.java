@@ -32,7 +32,7 @@ public class HtmlPrinter implements IPrinter {
     }
 
     private String generateHtmlSource(Set<Artist> list) {
-        String source = //in separate method!
+        String source = //in separate method! -- fixed issue
                 html(
                         head(
                                 title(HTML_TITLE)

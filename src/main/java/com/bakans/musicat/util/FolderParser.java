@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FolderParser {
 
@@ -47,21 +48,18 @@ public class FolderParser {
         }
     }
 
-    private static void addToList(Set<Artist> list, String artist, String album, Song song) {//can you simplify it...
+    private static void addToList(Set<Artist> list, String artist, String album, Song song) {//can you simplify it...  --fixed issue
         Artist newArt = new Artist(artist);
         Album newAlb = new Album(album);
-        if (!list.isEmpty()) {
-            for (Artist art : list) {
-                if (art.getName().equals(artist)) {
-                    if (art.hasAlbum(album)) {
-                        art.getAlbum(album).addTrack(song);
-                        return;
-                    } else {
-                        newAlb.addTrack(song);
-                        art.addAlbum(newAlb);
-                        return;
-                    }
-                }
+        if(list.stream().anyMatch(art -> artist.equals(art.getName()))) {
+            Artist tmp = list.stream().filter(art -> artist.equals(art.getName())).collect(Collectors.toList()).get(0);
+            if( tmp.getAlbums().stream().anyMatch(alb -> album.equals(alb.getAlbumTitle()))) {
+                tmp.getAlbum(album).addTrack(song);
+                return;
+            } else {
+                newAlb.addTrack(song);
+                tmp.addAlbum(newAlb);
+                return;
             }
         }
         newAlb.addTrack(song);
